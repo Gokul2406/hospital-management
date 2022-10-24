@@ -19,7 +19,24 @@ def signup(username, password, isAdmin):
             con.close()
             print("success")
             
-
-
+def login(user, password):
+    key_fetch = "select * from misc"
+    con = connect()
+    cur = con.cursor()
+    cur.execute(f"use {db_name}")
+    cur.execute(key_fetch)
+    res = cur.fetchall()
+    for keys in res:
+        for key in keys:
+            fernet = Fernet(key.encode())
+            cur.execute(f"select password from users where username = '{user}'")
+            user = cur.fetchall()
+            for values in user:
+                for enc_password in values:
+                    dec_pass = fernet.decrypt(enc_password.encode()).decode()
+                    if dec_pass == password:
+                        print("login success")
+                    else:
+                        print("no")
 
 

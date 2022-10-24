@@ -1,5 +1,5 @@
 from cryptography.fernet import Fernet
-from auth import signup
+from auth import signup, login
 from util import connect, db_name
 
 
@@ -26,4 +26,6 @@ def setup():
 
 if __name__ == "__main__":
     setup()
-    signup("hi", "hil", False)
+    #signup("hi", "hil", False)
+    login("hi", "hil")
+
