@@ -1,6 +1,7 @@
 from cryptography.fernet import Fernet
 from auth import signup, login
 from util import connect, db_name
+from admin import add_doctors, remove_doctors
 
 
 def setup():
@@ -8,7 +9,7 @@ def setup():
     cur = con.cursor()
     cur.execute(f"create database if not exists {db_name}")
     cur.execute(f"use {db_name}")
-    cur.execute("create table if not exists doctors(doc_id int primary key, name varchar(25), dept varchar(25))")
+    cur.execute("create table if not exists doctors(doc_id int primary key, name varchar(25), dept varchar(25), salary int, working_hrs int, fees int)")
     cur.execute("create table if not exists patients(id int primary key, name varchar(25), doc_id int, foreign key(doc_id) references doctors(doc_id))")
     cur.execute("create table if not exists pharmacy(id int primary key, med_name varchar(25), stock int, price int)")
     cur.execute("create table if not exists users(id int primary key, username varchar(25), password varchar(500))")
@@ -27,5 +28,6 @@ def setup():
 if __name__ == "__main__":
     setup()
     #signup("hi", "hil", False)
-    login("hi", "hil")
-
+    login("hi", "hi")
+#    add_doctors()
+    remove_doctors()
